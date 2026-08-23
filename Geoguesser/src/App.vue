@@ -1,47 +1,23 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <HomePage @menu="menu" />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script setup>
+import HomePage from './components/homepage.vue'
+
+
+function menu() {
+  console.log('Menu clicked!')
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+</script>
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+/* remove any default padding/margin so background fills the screen */
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 </style>
