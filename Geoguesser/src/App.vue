@@ -1,14 +1,18 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <HomePage @menu="menu" />
+  <HomePage v-if="showHomePage" @menu="menu" />
+  <Menu v-else />
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import HomePage from './components/homepage.vue'
+import Menu from '@/components/menu.vue'
 
+const showHomePage = ref(true)
 
 function menu() {
-  console.log('Menu clicked!')
+  showHomePage.value = false
 }
 
 </script>

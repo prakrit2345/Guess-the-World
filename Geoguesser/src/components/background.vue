@@ -7,9 +7,8 @@
 </template>
 <script setup>
 import {ref,watch} from 'vue'
-import musicFile from '@/assets/world.mp3'
+import { audio } from '@/music.js'
 const musicstate = ref(true)
-const audio = new Audio(musicFile)
 watch(musicstate, (value) => {
   if (value) {
     audio.play()
