@@ -5,7 +5,7 @@
       <p>Test your geography skills!</p>
       <div class="menu">
         <i class="bi bi-list"></i>
-        <button type="button" class="btn btn-secondary" @click="menu">Menu</button>
+        <button type="button" class="btn btn-secondary" @click="navigate">Menu</button>
       </div>
     </div>
   </Background>
@@ -14,10 +14,10 @@
 <script setup>
 import Background from './background.vue'
 
-const emit = defineEmits(['menu'])
+const emit = defineEmits(['navigate'])
 
-function menu() {
-  emit('menu')
+function navigate() {
+  emit('navigate', '/menu')
 }
 </script>
 

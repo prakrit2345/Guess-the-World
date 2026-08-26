@@ -5,11 +5,11 @@
             <p>MENU</p>
         
                 <div class="row text-center gy-4">
-                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="menu" >Menu</button></div>
-                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="register">Register</button></div>
+                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" id="login" @click="handleNavigate('/login')">Login</button></div>
+                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="handleNavigate('/register')">Register</button></div>
 
-                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="multiplayer">Multiplayer</button></div>
-                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="playAsGuest">Play As Guest</button></div>
+                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="handleNavigate('/multiplayer')">Multiplayer</button></div>
+                    <div class="col-6"> <button type="button" class="btn btn-secondary btn-lg" @click="handleNavigate('/guest')">Play As Guest</button></div>
                 </div>
            
         </div>
@@ -18,6 +18,10 @@
 
 <script setup>
   import Background from './background.vue'
+  const emit=defineEmits(['navigate'])
+  function handleNavigate(path) {
+    emit('navigate', path)
+  }
 </script>
 
 <style scoped>
