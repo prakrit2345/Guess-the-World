@@ -1,0 +1,19 @@
+# docker-compose.yml
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: geoguesser
+      POSTGRES_USER: geo
+      POSTGRES_PASSWORD: geo
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+  backend:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes: [".:/app"]
+    ports: ["8000:8000"]
+    depends_on: [db]
+    env_file: .env
+volumes:
+  pgdata:

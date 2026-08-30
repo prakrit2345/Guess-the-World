@@ -1,1 +1,3 @@
-.venv/
+# Add the environemnt file here
+.env
+

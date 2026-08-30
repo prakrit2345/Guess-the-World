@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,18 +23,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-idk+1!cb)u671ava!llu6q+o-fh)f&ht_t)o_5xqcg-9z*)zc3'
+SECRET_KEY = 'django-insecure-_j%=%r-p&wn&(wsuj1t^1ao-451!h*vmkeb*gfzg3_#6u@f*y&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-
+ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
-    'hello',
+    # Add the apps in user
+    'apps.core',
+    'apps.games',
+    'apps.locations',
+    'apps.users',
+    
+    #Installed ones
+    'rest_framework',
+    # Provided internally by the django itself
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,17 +82,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
-# Consists of databasename, user, password, host and then the port
+# Fetch from the .env file
+import environ
+
+env = environ.Env()
+# It should be the location of  the .env file
+environ.Env.read_env(Path('.env'))
+
+# Create the connection using the database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'geoguesser',
-        'USER': 'postgres',
-        'PASSWORD': 'milan123',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}
+    "default": env.db("DATABASE_URL")
+} 
+
 
 
 # Password validation
@@ -130,5 +141,3 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
-
-ALLOWED_HOSTS
