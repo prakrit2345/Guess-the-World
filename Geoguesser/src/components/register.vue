@@ -1,6 +1,37 @@
 <template>
-    <div class="random">
-        <h1>Register</h1>
-    </div>
+ <Background>
+
+ <div class="overlay">
+ <form>
+     <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password">
+  </div>
+ 
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+ </Background>
 
 </template>
+<script setup>
+    import Background from './background.vue'
+</script>
+<style scoped>
+  .overlay {
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+}
+</style>
