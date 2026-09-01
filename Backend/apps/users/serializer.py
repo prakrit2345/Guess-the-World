@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from . import models
 import re
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
+
+    
 
 class RegisterModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,14 +12,14 @@ class RegisterModelSerializer(serializers.ModelSerializer):
         
         
     def validate_password(self, value):
-        pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$"
         if not re.match(pattern, value):
             raise serializers.ValidationError(
                 "Password must contain at least one lowercase letter, "
                 "one uppercase letter, one number, and one special character, "
                 "and must be at least 8 characters long."
             )
-
+        print(True)
         return value
 
     
@@ -26,6 +28,7 @@ class RegisterModelSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "There must be firstname."
             )
+        print(True)
         return value
     
     def validate_lastName(self, value):
@@ -33,6 +36,7 @@ class RegisterModelSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "There must be lastname"
             )
+        print(True)
         return value
     
     def validate_address(self, value):
@@ -40,6 +44,7 @@ class RegisterModelSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Address must contain 5 characters."
             )
+        print(True)
         return value
     
     #For the password hashing
@@ -48,6 +53,43 @@ class RegisterModelSerializer(serializers.ModelSerializer):
         validated_data["password"] = make_password(
             validated_data["password"]
         )
+        print(True)
         return models.User.objects.create(
             **validated_data
         )
+
+class LoginModelSerializer(serializers.Serializer):
+    #Since I mentioned email to be unique so no need
+    
+    # class Meta:
+    #     model = models.User
+    #     fields = ["email", "password"]
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    
+    def validate(self, data):
+        email = data["email"]
+        password = data["password"]
+        
+        
+        # Search for such result
+        user = models.User.objects.filter(email=email).first()
+        print("Type of user: ", type(user))
+        
+        # after getting the user now just compare the password 
+        if user is None:
+            raise serializers.ValidationError(
+                "Invalid email."
+            )
+            
+        # Now check for the password
+        if not check_password(password, user.password):
+            raise serializers.ValidationError(
+                "Invaid password"
+            )
+            
+        data["user"] = user
+        print("Crossed this step")
+        return data
+        
+        
