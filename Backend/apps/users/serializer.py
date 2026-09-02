@@ -2,7 +2,7 @@ from rest_framework import serializers
 from . import models
 import re
 from django.contrib.auth.hashers import make_password, check_password
-
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
     
 
 class RegisterModelSerializer(serializers.ModelSerializer):
@@ -61,9 +61,6 @@ class RegisterModelSerializer(serializers.ModelSerializer):
 class LoginModelSerializer(serializers.Serializer):
     #Since I mentioned email to be unique so no need
     
-    # class Meta:
-    #     model = models.User
-    #     fields = ["email", "password"]
     email = serializers.EmailField()
     password = serializers.CharField()
     
@@ -87,9 +84,15 @@ class LoginModelSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 "Invaid password"
             )
-            
-        data["user"] = user
-        print("Crossed this step")
-        return data
+        
+        # Now generate the jwt based on the user's data
+        refresh = RefreshToken.for_user(user=user)
+        
+        
+        return {
+            "access": str(refresh.access_token),
+            "refresh": str(refresh)
+        }
+
         
         
