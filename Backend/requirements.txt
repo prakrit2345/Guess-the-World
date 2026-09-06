@@ -1,0 +1,7 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+psycopg[binary]
+django-cors-headers
+dj-database-url
+django-environ

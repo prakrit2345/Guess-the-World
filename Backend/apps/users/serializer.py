@@ -2,7 +2,7 @@ from rest_framework import serializers
 from . import models
 import re
 from django.contrib.auth.hashers import make_password, check_password
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken
     
 
 class RegisterModelSerializer(serializers.ModelSerializer):
@@ -53,7 +53,6 @@ class RegisterModelSerializer(serializers.ModelSerializer):
         validated_data["password"] = make_password(
             validated_data["password"]
         )
-        print(True)
         return models.User.objects.create(
             **validated_data
         )
@@ -71,7 +70,6 @@ class LoginModelSerializer(serializers.Serializer):
         
         # Search for such result
         user = models.User.objects.filter(email=email).first()
-        print("Type of user: ", type(user))
         
         # after getting the user now just compare the password 
         if user is None:

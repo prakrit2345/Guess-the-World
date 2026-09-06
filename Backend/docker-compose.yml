@@ -6,7 +6,7 @@ services:
       POSTGRES_DB: geoguesser
       POSTGRES_USER: geo
       POSTGRES_PASSWORD: geo
-    ports: ["5432:5432"]
+    ports: ["5433:5432"]
     volumes: ["pgdata:/var/lib/postgresql/data"]
   backend:
     build: .
